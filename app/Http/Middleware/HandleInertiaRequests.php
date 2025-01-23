@@ -29,11 +29,16 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return [
-            ...parent::share($request),
+
+        return array_merge(parent::share($request),[ //เรียกใช้ข้อมูลพื้นฐานที่ฟังก์ชัน share จาก parent class
             'auth' => [
                 'user' => $request->user(),
             ],
-        ];
+            'flash' => [ //ประกาศตัวแปร flash และกำหนดค่าสำหรับแสดงข้อความแจ้งเตือน
+	            'success' => $request->session()->get('success')?? null , //ดึงข้อความจากsession
+	            'error' => $request->session()->get('error')?? null ,
+	        ],
+        ]);
     }
+
 }

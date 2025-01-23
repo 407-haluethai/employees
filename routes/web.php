@@ -1,10 +1,23 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\EmployeeController;
+
+// หน้าแสดงข้อมูลพนักงาน
+Route::get('/employee', [EmployeeController::class, 'index'])
+->name('employee.index');
+
+// หน้าแบบฟอร์มสำหรับเพิ่มข้อมูลพนักงาน
+Route::get('/employee/create', [EmployeeController::class, 'create'])
+->name('employee.create');
+
+// Function สำหรับบันทึกข้อมูลพนักงาน
+Route::post('/employee', [EmployeeController::class, 'store'])
+->name('employee.store');
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -14,9 +27,6 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
-  //เปลี่ยนจากการเรียกใช้งาน Controller ให้เป็นการเรียกใช้งาน Route
-Route::get('/employee', [EmployeeController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
